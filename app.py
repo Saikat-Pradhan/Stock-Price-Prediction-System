@@ -46,24 +46,31 @@ if ticker:
     
     # Visualizations
     st.subheader(f"{input} Closing Price vs Time Chart")
-    fig = plt.figure(figsize = (12,6))
-    plt.plot(df.Close)
+    fig = plt.figure(figsize=(12, 6))
+    plt.plot(df['Date'], df['Close'], label='Close')
+    plt.legend()
+    plt.grid(True)
     st.pyplot(fig)
 
+    # Closing Price chart with 100MA
     st.subheader(f"{input} Closing Price vs Time Chart with 100MA")
-    ma100 = df.Close.rolling(100).mean()
+    ma100 = df['Close'].rolling(100).mean()
     fig = plt.figure(figsize=(12, 6))
-    plt.plot(ma100, 'r')
-    plt.plot(df.Close)
+    plt.plot(df['Date'], df['Close'], label='Close')
+    plt.plot(df['Date'], ma100, 'r', label='100MA')
+    plt.legend()
+    plt.grid(True)
     st.pyplot(fig)
 
+    # Closing Price chart with 100MA and 200MA
     st.subheader(f"{input} Closing Price vs Time Chart with 200MA")
-    ma100 = df.Close.rolling(100).mean()
-    ma200 = df.Close.rolling(200).mean()
+    ma200 = df['Close'].rolling(200).mean()
     fig = plt.figure(figsize=(12, 6))
-    plt.plot(ma100, 'r')
-    plt.plot(ma200, 'g')
-    plt.plot(df.Close)
+    plt.plot(df['Date'], df['Close'], label='Close')
+    plt.plot(df['Date'], ma100, 'r', label='100MA')
+    plt.plot(df['Date'], ma200, 'g', label='200MA')
+    plt.legend()
+    plt.grid(True)
     st.pyplot(fig)
 
     # Splitting data into Training and Testing
@@ -108,10 +115,12 @@ if ticker:
 
     # Final Graph
     st.subheader(f"{input} Predicted vs Actual Closing Price Data")
-    plt.figure(figsize=(12, 6))
+
+    fig = plt.figure(figsize=(12, 6))
     plt.plot(y_test, 'b', label='Original Price')
     plt.plot(y_pred, 'r', label='Predicted Price')
     plt.xlabel('Time')
     plt.ylabel('Price')
     plt.legend()
+    plt.grid(True)
     st.pyplot(fig)
